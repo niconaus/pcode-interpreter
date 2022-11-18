@@ -1,12 +1,12 @@
 {-|
 Module      : PCode
 Description : Ghidra P-Code language definitions
-Copyright   : (c) Nico Naus, 2021
-Maintainer  : nico.naus@ou.nl
+Copyright   : (c) Nico Naus, 2022
+Maintainer  : niconaus@vt.edu
 Stability   : experimental
 This module defines the datatypes and translation of Ghidra P-Code
 -}
-module PCode.Types where
+module Types where
 
 import qualified Data.Map as M
 import Data.Word ( Word8 )

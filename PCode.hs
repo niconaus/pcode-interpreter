@@ -1,20 +1,19 @@
 {-|
-Module      : PCode.PCode
-Description : PCode PCode file
+Module      : PCode
+Description : PCode file
 Copyright   : (c) Nico Naus, 2022
 Maintainer  : niconaus@vt.edu
 Stability   : experimental
 This module defines interfaces for interpreter and parser of P-Code
 -}
 
-module PCode.PCode where
+module PCode where
 
 import qualified Text.ParserCombinators.Parsec as P
 import qualified Data.Map as M
-import PCode.Types
-import PCode.Parser
-import PCode.Interpreter
-import WordString
+import Parser ( pFile )
+import Interpreter
+import WordString ( decodeWord32, encodeWord64 )
 
 main :: IO ()
 main = do

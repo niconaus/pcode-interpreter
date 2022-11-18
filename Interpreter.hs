@@ -1,23 +1,22 @@
 {-|
-Module      : PCode.Interpreter
+Module      : Interpreter
 Description : PCode interpreter
 Copyright   : (c) Nico Naus, 2022
 Maintainer  : niconaus@vt.edu
 Stability   : experimental
 This module defines a simple interpreter for Ghidra P-Code
 -}
-module PCode.Interpreter where
+module Interpreter where
 
 import qualified Data.Map as M
-import PCode.Types
-import PCode.Parser ( pFile )
+import Types
+import Parser ( pFile )
 import qualified Text.ParserCombinators.Parsec as P
 import Data.Word ( Word8, Word16, Word32, Word64 )
 import Data.Binary.IEEE754
     ( doubleToWord, floatToWord, wordToDouble, wordToFloat )
 import Data.ByteString.Builder ()
 import qualified Data.ByteString.Lazy as BS
-import Data.Binary.Get
 import qualified Text.Hex as Hex
 import qualified Data.Text as Text
 import Data.Bits
@@ -26,7 +25,6 @@ import Data.Bits
 import GHC.Float
     ( double2Float,
       float2Double,
-      integerLogBase,
       negateDouble,
       negateFloat )
 import Data.Maybe (fromMaybe)
@@ -438,6 +436,7 @@ fromBool True = 1
 fromBool False = 0
 
 -- Two's complement conversion functions
+-- source: https://stackoverflow.com/questions/15047191/read-write-haskell-integer-in-twos-complement-representation
 bs2i :: [Word8] -> Integer
 bs2i bs
    | sign = go b - 2 ^ (BS.length b * 8)
@@ -456,3 +455,13 @@ i2bs x
       bytes = (integerLogBase 2 (abs x) + 1) `quot` 8 + 1
       go i = if i == 0 then Nothing
                        else Just (fromIntegral i, i `shiftR` 8)
+
+integerLogBase :: Integer -> Integer -> Int
+integerLogBase b i =
+     if i < b then
+        0
+     else
+        let l = 2 * integerLogBase (b*b) i
+            doDiv :: Integer -> Int -> Int
+            doDiv i l = if i < b then l else doDiv (i `div` b) (l+1)
+        in  doDiv (i `div` (b^l)) l

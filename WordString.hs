@@ -8,12 +8,13 @@ This module defines several helper functions to perform operations on word8 stri
 -}
 module WordString where
 
-import Data.Binary
+import Data.Binary ( Word8, Word16, Word32, Word64 )
 import Data.ByteString.Builder
+    ( toLazyByteString, word16BE, word32BE, word64BE )
 import qualified Data.ByteString.Lazy as BS
-import Data.Word
 import Data.Binary.Get
-import Data.Bits
+    ( getWord16be, getWord32be, getWord64be, runGet )
+import Data.Bits ( Bits(testBit) )
 
 -- Unsigned addition
 uAdd :: [Word8] -> [Word8] -> [Word8]

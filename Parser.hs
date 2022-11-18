@@ -1,18 +1,18 @@
 {-|
 Module      : PCode
 Description : Ghidra P-Code language definitions
-Copyright   : (c) Nico Naus, 2021
-Maintainer  : nico.naus@ou.nl
+Copyright   : (c) Nico Naus, 2022
+Maintainer  : niconaus@vt.edu
 Stability   : experimental
 This module defines the datatypes and translation of Ghidra P-Code
 -}
-module PCode.Parser where
+module Parser where
 
 import qualified Data.Map as M
 import Data.Maybe ( fromMaybe )
 import Data.List ( foldl', elemIndex )
 import Text.ParserCombinators.Parsec
-import PCode.Types
+import Types
 import Data.Word ( Word8 )
 import Text.Hex ( decodeHex )
 import qualified Data.ByteString as BS
