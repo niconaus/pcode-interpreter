@@ -28,7 +28,7 @@ main = do
                 let entryAddr = encodeWord64 $ toEnum (read entry :: Int)
                 putStrLn "Enter arguments"
                 args <- getLine
-                let numbers = map read (lines args) :: [Int]
+                let numbers = map read (words args) :: [Int]
                 let regs = foldr (\(a,v) r -> setReg r a v) emptyReg (zip [arg0,arg1,arg2,arg3,arg4,arg5] (map (encodeWord64 . toEnum) numbers))
                 let (_,regs',_) = run (fst x) (M.empty,regs,M.empty) entryAddr entryAddr
                 --print regs'
